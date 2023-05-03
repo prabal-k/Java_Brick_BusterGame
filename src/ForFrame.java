@@ -46,6 +46,22 @@ public class ForFrame extends JPanel implements KeyListener {
         }
         repaint();
 
+        //COllision of paddle ra oval ko lagi //imp
+
+        if(new Rectangle(x_rect,700,80,12).intersects(new Rectangle(x_oval,y_oval,20,20)))
+        {
+         while(x_oval!=0)
+         {
+             repaint();
+             x_oval--;
+
+         }
+
+        }
+
+
+
+
 
     }
 
@@ -66,7 +82,7 @@ public class ForFrame extends JPanel implements KeyListener {
             }
 
             else {
-                x_rect = x_rect + 10;
+                x_rect = x_rect + 14;
                 repaint();
             }
 
@@ -78,10 +94,21 @@ public class ForFrame extends JPanel implements KeyListener {
                 repaint();
             }
             else {
-                x_rect = x_rect - 10;
+                x_rect = x_rect - 14;
                 repaint();
             }
         }
+        
+
+        ///COLLISION CHECK KO LAGI
+
+        //COLLISION CHECK
+        check_collision();
+    }
+    void check_collision()
+    {
+
+
 
     }
 
