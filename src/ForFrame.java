@@ -10,17 +10,18 @@ public class ForFrame extends JPanel implements KeyListener {
     JLabel label=new JLabel();
     int x_rect =350 ,y_rect=700,x_oval=378,y_oval=674;
     int speedx=15,speedy=15;
+    boolean out ;
+    Brick_map brick_map=new Brick_map();
     ForFrame()
     {
         frame.setSize(800,800);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
 
-        label.setBackground(Color.BLACK);
-        label.setOpaque(true);
-        frame.add(label);
+//        frame.getContentPane().setForeground(Color.BLUE);
+//        frame.getContentPane().setBackground(Color.BLUE);
+        frame.setVisible(true);
         frame.add(this);
         frame.addKeyListener(this);
     }
@@ -28,14 +29,21 @@ public class ForFrame extends JPanel implements KeyListener {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.red);
-        g.fillOval(x_oval,y_oval,20,20);
-        g.fillRect(x_rect,y_rect,80,12);
-
+        g.setColor(Color.blue);
+        g.fillOval(x_oval, y_oval, 20, 20);
+        g.fillRect(x_rect, y_rect, 100, 10);
+        brick_map.draw((Graphics2D) g);
+        ballin();
+    }
+    void ballin()
+    {
         if(x_oval<0||x_oval>770)
             speedx=-speedx;
-        if(y_oval<0||y_oval>770)
+        if(y_oval<0)
             speedy=-speedy;
+        else if(y_oval>770)
+            out=true;
+            check_ballout();
 
         x_oval=x_oval-speedx;
         y_oval=y_oval-speedy;
@@ -59,11 +67,19 @@ public class ForFrame extends JPanel implements KeyListener {
 
         }
         repaint();
+    }
 
+    //BALL OUT GAYO VANI REGENERATE GARNA KO LAGI
+    void check_ballout()
+    {
+        if(out==true)
+        {
+            x_oval=378;
+            y_oval=674-20;
 
-
-
-
+            repaint();
+          //  ballin();
+        }
     }
 
     @Override
