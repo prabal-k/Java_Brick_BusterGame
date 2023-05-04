@@ -50,14 +50,15 @@ public class ForFrame extends JPanel implements KeyListener {
 
         if(new Rectangle(x_rect,700,80,12).intersects(new Rectangle(x_oval,y_oval,20,20)))
         {
-         while(x_oval!=0)
-         {
-             repaint();
-             x_oval--;
-
-         }
+            if(x_oval<0||x_oval>680)
+                speedx=-speedx;
+            if(y_oval<0||y_oval>680)
+                speedy=-speedy;
+            x_oval=x_oval-speedx;
+            y_oval=y_oval-speedy;
 
         }
+        repaint();
 
 
 
