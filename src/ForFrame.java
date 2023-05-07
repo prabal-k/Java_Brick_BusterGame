@@ -5,45 +5,104 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ForFrame extends JPanel implements KeyListener {
+public class ForFrame extends JPanel implements KeyListener ,MouseListener{
     public JFrame frame=new JFrame();
-    JLabel label=new JLabel();
+    JLabel score_label=new JLabel();
+    int score=0;
+  //  JLabel label=new JLabel();
     int x_rect =350 ,y_rect=700,x_oval=378,y_oval=674;
     int speedx=15,speedy=15;
-    boolean out ;
+  //  boolean out ;
     Brick_map brick_map=new Brick_map();
     ForFrame()
     {
         frame.setSize(800,800);
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        score_label.setBounds(700,0,60,30);
+        score_label.setText("0");
+        score_label.setForeground(Color.GREEN);
+        score_label.setFont(new Font("Ink free",Font.BOLD,40));
+        add(score_label);
 
-//        frame.getContentPane().setForeground(Color.BLUE);
-//        frame.getContentPane().setBackground(Color.BLUE);
-        frame.setVisible(true);
+        //frame.getContentPane().setForeground(Color.BLUE);
+
         frame.add(this);
         frame.addKeyListener(this);
+        setBackground(Color.BLACK);
+        frame.setVisible(true);
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.blue);
+        g.setColor(Color.WHITE);
         g.fillOval(x_oval, y_oval, 20, 20);
         g.fillRect(x_rect, y_rect, 100, 10);
         brick_map.draw((Graphics2D) g);
-        ballin();
+       ballin();
     }
     void ballin()
     {
+        //COllision of paddle ra oval ko lagi //imp
+
+        if(new Rectangle(x_rect,y_rect,80,12).intersects(new Rectangle(x_oval,y_oval,20,20)))
+        {
+            if(x_oval<0||x_oval>680)
+                speedx=-speedx;
+            if(y_oval<0||y_oval>680)
+                speedy=-speedy;
+            x_oval=x_oval-speedx;
+            y_oval=y_oval-speedy;
+        }
+        A:for(int i=0;i<brick_map.map.length;i++)
+        {
+            for(int j=0;j<brick_map.map[0].length;j++)
+            {
+                if(brick_map.map[i][j]>0)
+                {
+                    int brickx=j*brick_map.width+80;
+                    int bricky=i*brick_map.height+80;
+                    int wid=brick_map.width;
+                    int hei=brick_map.height;
+                    Rectangle rect=new Rectangle(brickx,bricky,wid,hei);
+                    Rectangle ballrect=new Rectangle(x_oval,y_oval,20,20);
+                    Rectangle brickrect=rect;
+                    if(ballrect.intersects(brickrect))
+                    {
+                        brick_map.Brickscount(0,i,j);
+                        score=score+5;
+                       // System.out.println(score);
+                        score_label.setText(String.valueOf(score));
+                        if(x_oval+19<=brickrect.x||y_oval+1>=brickrect.x+brickrect.width)
+                        {
+//                            x_oval=-x_oval;
+                            speedx=-speedx;
+                        }
+                        else
+                        {
+                            //y_oval=-y_oval;
+                            speedy=-speedy;
+                        }
+                        break A;
+                    }
+                }
+            }
+        }
         if(x_oval<0||x_oval>770)
             speedx=-speedx;
-        if(y_oval<0)
+        if(y_oval<0||y_oval>770)
             speedy=-speedy;
-        else if(y_oval>770)
-            out=true;
-            check_ballout();
+
+        //pheri ball reset garna ko lagi
+
+
+
+//        else if(y_oval>770)
+//            out=true;
+//            check_ballout();
 
         x_oval=x_oval-speedx;
         y_oval=y_oval-speedy;
@@ -54,33 +113,24 @@ public class ForFrame extends JPanel implements KeyListener {
         }
         repaint();
 
-        //COllision of paddle ra oval ko lagi //imp
 
-        if(new Rectangle(x_rect,700,80,12).intersects(new Rectangle(x_oval,y_oval,20,20)))
-        {
-            if(x_oval<0||x_oval>680)
-                speedx=-speedx;
-            if(y_oval<0||y_oval>680)
-                speedy=-speedy;
-            x_oval=x_oval-speedx;
-            y_oval=y_oval-speedy;
 
-        }
-        repaint();
+
     }
 
     //BALL OUT GAYO VANI REGENERATE GARNA KO LAGI
-    void check_ballout()
-    {
-        if(out==true)
-        {
-            x_oval=378;
-            y_oval=674-20;
-
-            repaint();
-          //  ballin();
-        }
-    }
+//    void check_ballout()
+//    {
+//        if(out==true)
+//        {
+//            x_oval=378;
+//            y_oval=674-20;
+//
+//            repaint();
+//          //  ballin();
+//
+//        }
+//    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -89,11 +139,9 @@ public class ForFrame extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
-
         if(e.getKeyCode()==KeyEvent.VK_RIGHT)
         {
-            if(x_rect>=710)
+            if(x_rect>=680)
             {
                 repaint();
             }
@@ -135,5 +183,28 @@ public class ForFrame extends JPanel implements KeyListener {
     }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
