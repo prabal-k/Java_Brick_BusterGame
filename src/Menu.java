@@ -20,12 +20,10 @@ public class Menu implements ActionListener
         start_button.setText("PLAY");
         frame.add(start_button);
 
-
     }
-    int click ()
+    void click ()
     {
         start_button.addActionListener(this);
-        return 1;
     }
 
     @Override
