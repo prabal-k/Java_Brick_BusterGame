@@ -126,7 +126,6 @@ public class Menu implements ActionListener {
         if (e.getSource() == startButton) {
             // TODO: handle start game button press
 
-
         } else if (e.getSource() == exitButton) {
             System.exit(0);
         }
