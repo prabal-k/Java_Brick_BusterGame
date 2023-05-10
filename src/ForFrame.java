@@ -147,7 +147,7 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
             }
 
             else {
-                x_rect = x_rect + 14;
+                x_rect = x_rect + 30;
                 repaint();
             }
 
@@ -159,7 +159,7 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
                 repaint();
             }
             else {
-                x_rect = x_rect - 14;
+                x_rect = x_rect - 30;
                 repaint();
             }
         }
