@@ -47,4 +47,5 @@ public class Brick_map {
         map[row][col]=val;
     }
 
+
 }

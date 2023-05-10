@@ -1,45 +1,3 @@
-//import javax.swing.*;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//
-//public class Menu implements ActionListener
-//
-//{
-//    JFrame frame=new JFrame();
-//    boolean status;
-//    JButton start_button =new JButton();
-//    void menu()
-//    {
-//        frame.setSize(800,800);
-//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo(null);
-//        frame.setLayout(null);
-//        frame.setVisible(true);
-//
-//        start_button.setBounds(400,400,70,30);
-//        start_button.setText("PLAY");
-//        frame.add(start_button);
-//
-//
-//    }
-//    int click ()
-//    {
-//        start_button.addActionListener(this);
-//        return 1;
-//    }
-//
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        if(e.getSource()==start_button)
-//        {
-//            System.out.println("helo");
-//            status=true;
-//        }
-//
-//
-//    }
-//}
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,29 +20,19 @@ public class Menu implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 750);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.setLayout(new BorderLayout());
-        frame.getContentPane().setBackground(Color.BLACK);
-
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Image image = new ImageIcon("Black_colour.jpg").getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
 
         // Create title label
         titleLabel = new JLabel("Menu");
-//        titleLabel.setBounds(500,150,50,50);
         titleLabel.setForeground(Color.BLACK);
-        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 40));
+        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 75));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
 
 
         // Create button panel
         buttonPanel = new JPanel((new GridLayout(2, 1, 1, 1)));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 150, 150, 150));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(75, 150, 150, 150));
 
 
         // Create start button
@@ -125,6 +73,7 @@ public class Menu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             // TODO: handle start game button press
+            ForFrame forFrame=new ForFrame();
 
         } else if (e.getSource() == exitButton) {
             System.exit(0);
