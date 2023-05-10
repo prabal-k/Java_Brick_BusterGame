@@ -8,6 +8,8 @@ import java.awt.event.MouseListener;
 public class ForFrame extends JPanel implements KeyListener ,MouseListener{
     public JFrame frame=new JFrame();
     JLabel score_label=new JLabel();
+    int count=2;
+    JLabel life_lable =new JLabel();
     int score=0;
   //  JLabel label=new JLabel();
     int x_rect =350 ,y_rect=700,x_oval=378,y_oval=674;
@@ -22,9 +24,15 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         score_label.setBounds(700,0,60,30);
-        score_label.setText("0");
+        score_label.setText(String.valueOf(score));
         score_label.setForeground(Color.GREEN);
         score_label.setFont(new Font("Ink free",Font.BOLD,40));
+        life_lable.setBounds(0,0,80,50);
+        life_lable.setForeground(Color.GREEN);
+        life_lable.setFont(new Font("Ink free",Font.BOLD,40));
+        life_lable.setText(String.valueOf(count));
+     //   add(life_lable);
+
         add(score_label);
 
         //frame.getContentPane().setForeground(Color.BLUE);
@@ -33,6 +41,7 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
         frame.addKeyListener(this);
         setBackground(Color.BLACK);
         frame.setVisible(true);
+       // frame.setLayout(null);
     }
 
     @Override
@@ -42,10 +51,13 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
         g.fillOval(x_oval, y_oval, 20, 20);
         g.fillRect(x_rect, y_rect, 100, 10);
         brick_map.draw((Graphics2D) g);
-       ballin();
+        try {
+            ballin();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-    void ballin()
-    {
+    void ballin() throws InterruptedException {
         //COllision of paddle ra oval ko lagi //imp
 
         if(new Rectangle(x_rect,y_rect,80,12).intersects(new Rectangle(x_oval,y_oval,20,20)))
@@ -76,7 +88,7 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
                         score=score+5;
                        // System.out.println(score);
                         score_label.setText(String.valueOf(score));
-                        if(x_oval+19<=brickrect.x||y_oval+1>=brickrect.x+brickrect.width)
+                        if(x_oval+10<=brickrect.x||y_oval+1>=brickrect.x+brickrect.width)
                         {
 //                            x_oval=-x_oval;
                             speedx=-speedx;
@@ -96,13 +108,10 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
         if(y_oval<0||y_oval>770)
             speedy=-speedy;
 
-        //pheri ball reset garna ko lagi
+        //pheri ball reset garna ko lagi and life count dekhauna
 
-
-
-//        else if(y_oval>770)
-//            out=true;
-//            check_ballout();
+        if(y_oval>770)
+            check_ballout();
 
         x_oval=x_oval-speedx;
         y_oval=y_oval-speedy;
@@ -119,18 +128,16 @@ public class ForFrame extends JPanel implements KeyListener ,MouseListener{
     }
 
     //BALL OUT GAYO VANI REGENERATE GARNA KO LAGI
-//    void check_ballout()
-//    {
-//        if(out==true)
-//        {
-//            x_oval=378;
-//            y_oval=674-20;
-//
-//            repaint();
-//          //  ballin();
-//
-//        }
-//    }
+    void check_ballout() throws InterruptedException {
+
+            x_oval=378;
+            y_oval=674-20;
+            Thread.sleep(1000);
+
+            repaint();
+          //  ballin();
+
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
